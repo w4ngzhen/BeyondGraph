@@ -51,11 +51,13 @@
     <Compile Include="Elements\ConnectionElement.cs" />
     <Compile Include="Elements\Element.cs" />
     <Compile Include="Elements\Impls\Anchor.cs" />
+    <Compile Include="Elements\Impls\Line.cs" />
     <Compile Include="Elements\NodeElement.cs" />
     <Compile Include="Elements\Impls\SimpleRectangle.cs" />
     <Compile Include="Canvas.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Factorys\ElementFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

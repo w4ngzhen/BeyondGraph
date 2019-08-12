@@ -13,26 +13,6 @@ namespace BeyondGraph.Elements
         /// </summary>
         protected Canvas canvas;
         /// <summary>
-        /// 承载元素的矩形对象
-        /// </summary>
-        protected Rectangle body;
-        /// <summary>
-        /// 元素的x坐标
-        /// </summary>
-        protected int x;
-        /// <summary>
-        /// 元素的y坐标
-        /// </summary>
-        protected int y;
-        /// <summary>
-        /// 元素的宽度
-        /// </summary>
-        protected int width;
-        /// <summary>
-        /// 元素的高度
-        /// </summary>
-        protected int height;
-        /// <summary>
         /// 是否被hover
         /// </summary>
         protected bool hovered;
@@ -40,55 +20,9 @@ namespace BeyondGraph.Elements
         /// 是否被select
         /// </summary>
         protected bool selected;
-        /// <summary>
-        /// 元素边线颜色
-        /// </summary>
-        protected Color borderColor = Color.Black;
-        /// <summary>
-        /// 元素背景颜色
-        /// </summary>
-        protected Color backgroundColor = Color.White;
 
         public Canvas Canvas { get { return this.canvas; }}
 
-        public Rectangle Body { get { return this.body; } }
-
-        public virtual int X
-        {
-            get { return this.body.X; }
-            set
-            {
-                this.body.X = value;
-                this.Invalidate();
-            }
-        }
-        public virtual int Y
-        {
-            get { return this.body.Y; }
-            set
-            {
-                this.body.Y = value;
-                this.Invalidate();
-            }
-        }
-        public virtual int Width
-        {
-            get { return this.body.Width; }
-            set
-            {
-                this.body.Width = value;
-                this.Invalidate();
-            }
-        }
-        public virtual int Height
-        {
-            get { return this.body.Height; }
-            set
-            {
-                this.body.Height = value;
-                this.Invalidate();
-            }
-        }
         public bool Hovered
         {
             get { return this.hovered; }
@@ -107,38 +41,22 @@ namespace BeyondGraph.Elements
                 this.Invalidate();
             }
         }
-
-        public Color BorderColor
+        public Element(Canvas canvas)
         {
-            get { return this.borderColor; }
-            set { this.borderColor = value; }
+            this.canvas = canvas;
         }
 
-        public Color BackgroundColor
-        {
-            get { return this.backgroundColor; }
-            set { this.backgroundColor = value; }
-        }
         /// <summary>
         /// 传入鼠标定位，返回鼠标是否捕获到该元素
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public virtual bool Caught(Point p)
-        {
-            Rectangle theMouse = new Rectangle(p, new Size(1, 1));
-            return this.body.Contains(theMouse);
-        }
+        public abstract bool CaughtBy(Point p);
         /// <summary>
         /// 对元素进行移动
         /// </summary>
         /// <param name="vector">相对于某个起始点的移动向量，只是利用了Point数据结构</param>
-        public virtual void Move(Point vector)
-        {
-            this.body.X += vector.X;
-            this.body.Y += vector.Y;
-            this.Invalidate();
-        }
+        public abstract void Move(Point vector);
         /// <summary>
         /// 绘制，具体由子类实现
         /// </summary>
@@ -147,11 +65,6 @@ namespace BeyondGraph.Elements
         /// <summary>
         /// 是指定画布区域失效并重新绘制，具体由子类实现
         /// </summary>
-        public virtual void Invalidate()
-        {
-            Rectangle renderArea = this.body;
-            renderArea.Inflate(5, 5);
-            this.canvas.Invalidate(renderArea);
-        }
+        public abstract void Invalidate();
     }
 }
