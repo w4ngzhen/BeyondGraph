@@ -1,3 +1,3 @@
 # BeyondGraph
 
-![](https://github.com/w4ngzhen/BeyondGraph/ScreenShot.png)
+![](https://cdn.jsdelivr.net/gh/w4ngzhen/BeyondGraph/ScreenShot.png)
