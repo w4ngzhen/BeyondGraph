@@ -14,7 +14,6 @@ namespace BeyondGraph
 
         private readonly List<ConnectionElement> _connections = new List<ConnectionElement>();
 
-        private ToolStripDropDownMenu _contextMenu;
         /// <summary>
         /// 记录当前hovered的元素
         /// </summary>
@@ -41,26 +40,27 @@ namespace BeyondGraph
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true); // 双缓冲
-            this.BuildMenu();
         }
 
-        private void BuildMenu()
+        private void ShowContextMenu(Point location)
         {
             ToolStripDropDownItem addItem = new ToolStripMenuItem();
             addItem.Name = "addMenu";
-            addItem.Text = "添加";
+            addItem.Text = "Add Element";
 
             ToolStripMenuItem addSimpleRectItem = new ToolStripMenuItem
             {
-                Name = "addSimpleRectItem", Text = "SimpleRectangle"
+                Name = "addSimpleRectItem",
+                Text = "SimpleRectangle"
             };
-            addSimpleRectItem.Click += (sender, e) => { AddNodeElement(); };
+            addSimpleRectItem.MouseDown += (sender, e) => { AddNodeElement(location); };
 
             addItem.DropDownItems.Add(addSimpleRectItem);
-
-            _contextMenu = new ToolStripDropDownMenu();
-            _contextMenu.Items.Add(addItem);
+            ToolStripDropDownMenu contextMenu = new ToolStripDropDownMenu();
+            contextMenu.Items.Add(addItem);
+            contextMenu.Show(this, location);
         }
+
         public void AddNodeElement()
         {
             Random rand = new Random();
@@ -154,7 +154,7 @@ namespace BeyondGraph
                     {
                         // 连接上了，则用候选锚点替换当前连接的tempTo锚点
                         // 释放当前tempTo锚点图像
-                        // 将tempConnction加如到画布上上的连接集合
+                        // 将tempConnection加如到画布上上的连接集合
                         this._tempConnection.To = candidate;
                         this._connections.Add(this._tempConnection);
                     }
@@ -233,7 +233,7 @@ namespace BeyondGraph
         }
         private void RightMouseDown(MouseEventArgs e)
         {
-            this._contextMenu.Show(this, e.Location);
+            this.ShowContextMenu(e.Location);
         }
         private void HoveringMoving(MouseEventArgs e)
         {
